@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Search Cars{% endblock %}
+{% block content %}
+<h1>Find Your Car</h1>
+
+<!-- Search Form -->
+<form method="GET" action="{{ url_for('search_results') }}">
+  <label>Company:</label>
+  <input type="text" name="company" placeholder="e.g. Toyota">
+
+  <label>Price Range:</label>
+  <input type="text" name="price_range" placeholder="e.g. 20000-50000">
+
+  <label>Car Type:</label>
+  <select name="car_type">
+    <option value="all">All</option>
+    <option value="suv">SUV</option>
+    <option value="family">Family</option>
+    <option value="sedan">Sedan</option>
+    <option value="hatchback">Hatchback</option>
+  </select>
+
+  <label>Fuel Type:</label>
+  <select name="fuel_type">
+    <option value="all">All</option>
+    <option value="petrol">Petrol</option>
+    <option value="diesel">Diesel</option>
+    <option value="electric">Electric</option>
+  </select>
+
+  <button type="submit">Search</button>
+</form>
+
+<hr>
+
+<!-- Show All Cars Grouped by Company -->
+<h2>All Available Cars</h2>
+{% if grouped_cars %}
+  {% for company, cars in grouped_cars.items() %}
+    <h3>{{ company|capitalize }}</h3>
+    <div class="car-container">
+      {% for car in cars %}
+        <div class="car-card">
+          <img src="{{ url_for('static', filename=car.image) }}" alt="{{ car.car_name }}" width="200" height="150">
+          <h2>{{ car.car_name }}</h2>
+          <p><strong>Model Year:</strong> {{ car.model_year }}</p>
+          <p><strong>Type:</strong> {{ car.car_type }}</p>
+          <p><strong>Fuel:</strong> {{ car.fuel_type }}</p>
+          <p><strong>Price:</strong> ${{ car.price }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+{% else %}
+  <p>No cars available.</p>
+{% endif %}
+{% endblock %}

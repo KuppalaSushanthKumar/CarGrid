@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Edit Car{% endblock %}
+{% block content %}
+<h1 style="text-align: center; margin-top: 20px;">Edit Car Details</h1>
+
+<!-- Car Edit Form -->
+<form method="POST" action="{{ url_for('update_car', car_id=car.id) }}" enctype="multipart/form-data" 
+    style="max-width: 500px; margin: 20px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; box-shadow: 2px 2px 10px rgba(0,0,0,0.1);">
+
+    <label for="car_name" style="font-weight: bold; margin-top: 10px;">Car Name:</label>
+    <input type="text" name="car_name" value="{{ car.car_name }}" required 
+        style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;">
+
+    <label for="company" style="font-weight: bold; margin-top: 10px;">Company:</label>
+    <input type="text" name="company" value="{{ car.company }}" required 
+        style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;">
+
+    <label for="model_year" style="font-weight: bold; margin-top: 10px;">Year:</label>
+    <input type="number" name="model_year" value="{{ car.model_year }}" required 
+        style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;">
+
+    <label for="car_type" style="font-weight: bold; margin-top: 10px;">Type:</label>
+    <input type="text" name="car_type" value="{{ car.car_type }}" required 
+        style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;">
+
+    <label for="fuel_type" style="font-weight: bold; margin-top: 10px;">Fuel Type:</label>
+    <input type="text" name="fuel_type" value="{{ car.fuel_type }}" required 
+        style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;">
+
+    <label for="price" style="font-weight: bold; margin-top: 10px;">Price:</label>
+    <input type="text" name="price" value="{{ car.price }}" required 
+        style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;">
+
+    <label for="image" style="font-weight: bold; margin-top: 10px;">Change Image:</label>
+    <input type="file" name="image" accept="image/*" 
+        style="width: 100%; padding: 10px; margin-top: 5px; border-radius: 4px;">
+
+    <!-- Show current image if available -->
+    {% if car.image %}
+    <div style="text-align: center; margin-top: 15px;">
+        <p style="font-size: 14px;">Current Image:</p>
+        <img src="{{ url_for('static', filename=car.image) }}" alt="{{ car.car_name }}" 
+            style="width: 200px; border-radius: 5px; margin-top: 5px; border: 1px solid #ccc;">
+    </div>
+    {% endif %}
+
+    <button type="submit" 
+        style="margin-top: 20px; background-color: #28a745; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; width: 100%;">
+        Update Car
+    </button>
+</form>
+
+<!-- Cancel Button -->
+<div style="text-align: center; margin-top: 20px;">
+    <a href="{{ url_for('upload') }}" 
+        style="text-decoration: none; color: white; background-color: #dc3545; padding: 10px 15px; border-radius: 5px;">
+        Cancel
+    </a>
+</div>
+{% endblock %}

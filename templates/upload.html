@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Upload Car{% endblock %}
+{% block content %}
+<h1>Upload a Car</h1>
+
+<form method="POST" enctype="multipart/form-data">
+  <input type="text" name="car_name" placeholder="Car Name" required>
+  <input type="text" name="company" placeholder="Company" required>
+  <input type="number" name="model_year" placeholder="Year" required>
+  <select name="car_type" required>
+    <option value="suv">SUV</option>
+    <option value="family">Family</option>
+    <option value="sedan">Sedan</option>
+    <option value="hatchback">Hatchback</option>
+  </select>
+  <select name="fuel_type" required>
+    <option value="petrol">Petrol</option>
+    <option value="diesel">Diesel</option>
+    <option value="electric">Electric</option>
+  </select>
+  <input type="text" name="price" placeholder="Price" required>
+  <input type="file" name="image" accept="image/*">
+  <button type="submit">Upload Car</button>
+</form>
+
+<hr>
+
+<h2>Available Cars</h2>
+<div class="car-container">
+  {% for car in cars %}
+    <div class="car-card">
+      <img src="{{ url_for('static', filename=car.image) }}" alt="{{ car.car_name }}">
+      <h3>{{ car.car_name }}</h3>
+      <p><strong>Company:</strong> {{ car.company }}</p>
+      <p><strong>Year:</strong> {{ car.model_year }}</p>
+      <p><strong>Type:</strong> {{ car.car_type|capitalize }}</p>
+      <p><strong>Fuel:</strong> {{ car.fuel_type|capitalize }}</p>
+      <p><strong>Price:</strong> ${{ car.price }}</p>
+
+      <a href="{{ url_for('edit_car', car_id=car.id) }}">Edit</a>
+      <form method="POST" action="{{ url_for('delete_car', car_id=car.id) }}" onsubmit="return confirm('Are you sure?');">
+        <button type="submit">Delete</button>
+      </form>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
